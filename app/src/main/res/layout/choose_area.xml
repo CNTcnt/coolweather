@@ -27,6 +27,7 @@
 
     </RelativeLayout>
     <ListView
+        android:background="#c9cbd0"
         android:id="@+id/list_View"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
