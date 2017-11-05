@@ -1,10 +1,13 @@
 package com.cnt.coolweather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cnt.coolweather.db.City;
 import com.cnt.coolweather.db.County;
 import com.cnt.coolweather.db.Provice;
+import com.cnt.coolweather.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +77,25 @@ public class Utility {
             }
         }
         return false;
+    }
+    public static Weather handleWeatherResponse(String response){
+        try{
+            Log.d("hhh", "handleWeatherResponse: 4");
+            JSONObject jsonObject = new JSONObject(response);
+            Log.d("hhh", "handleWeatherResponse: 1");
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            if (jsonArray != null) {
+            Log.d("hhh", "handleWeatherResponse: 2");
+            }
+            String weatherContent  = jsonArray.getJSONObject(0).toString();
+            Log.d("hhh", "handleWeatherResponse: 5"+weatherContent);
+            return new Gson().fromJson(weatherContent,Weather.class);
+        }catch(Exception e){
+            e.printStackTrace();
+            Log.d("hhh", "handleWeatherResponse: 3");
+
+        }
+        return null;
     }
 
 }
