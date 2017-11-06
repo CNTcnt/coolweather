@@ -3,7 +3,9 @@ package com.cnt.coolweather;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -75,6 +77,7 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,10 +96,11 @@ public class ChooseAreaFragment extends Fragment {
                     startActivity(intent);
                     getActivity().finish();
                     }else{
+                        String weatherId_1 = countyList.get(position).getWeatherId();
                         WeatherActivity weatherActivity = (WeatherActivity) getActivity();
                         weatherActivity.drawerLayout.closeDrawers();
                         weatherActivity.swipeRefreshLayout.setRefreshing(true);
-                        weatherActivity.requestWeather(weatherId);
+                        weatherActivity.requestWeather(weatherId_1);
                     }
                 }
             }
@@ -177,7 +181,7 @@ public class ChooseAreaFragment extends Fragment {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Toast.makeText(getContext(),"jiazaishibai",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"没有数据加载失败，请联网",Toast.LENGTH_SHORT).show();
                     }
                 });
 

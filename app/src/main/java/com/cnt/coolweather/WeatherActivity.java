@@ -46,6 +46,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView carWashText;
     private TextView sportText;
 
+
     private ImageView background_imageView;
     public SwipeRefreshLayout swipeRefreshLayout;
     String weatherid;
@@ -91,7 +92,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String weatherString = prefs.getString("weather", null);
+        final String weatherString = prefs.getString("weather", null);
         if (weatherString != null) {
             Weather weather = Utility.handleWeatherResponse(weatherString);
             weatherid = weather.basic.weatherId;
@@ -119,6 +120,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void requestWeather(final String WeatherId) {
+        weatherid = WeatherId;
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" + WeatherId + "&key=f502b2286c4f4067bd9720790e20188e";
         Log.d("hhh", "requestWeather: " + weatherUrl);
         httpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
@@ -197,6 +199,8 @@ public class WeatherActivity extends AppCompatActivity {
             titleUpdateTime.setText(updateTime);
             degressText.setText(degress);
             weatherInfoText.setText(weatherInfo);
+
+
 
             forecastLayout.removeAllViews();
             for (Forecast forecast : weather.forecastList) {
